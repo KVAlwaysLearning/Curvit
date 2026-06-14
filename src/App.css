@@ -1,34 +1,33 @@
-/* Ensure the root handles full screen */
+/* Ensure the root is black for a true background */
 body, html, #root {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  background-color: #000000; /* Sets the base background */
+  overflow: hidden;
 }
 
-/* This container holds the Orb and stays behind everything */
+.app-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
 .background-orb {
-  position: fixed;
+  position: fixed; /* Fixes the orb to the viewport */
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -1; /* Pushes it behind all content */
-  pointer-events: none; /* Allows mouse to pass through to the Orb if needed */
+  z-index: 0;
+  background-color: #000000; /* Ensures the orb's background is black */
 }
 
-/* Ensure the orb container fills the background div */
-.orb-container {
-  width: 100%;
-  height: 100%;
-}
-
-/* Your content wrapper */
 .content-wrapper {
   position: relative;
-  z-index: 1;
+  z-index: 1; /* Keeps content above the orb */
   width: 100%;
-  min-height: 100vh;
-  pointer-events: auto; /* Re-enables interaction for content */
+  height: 100%;
+  display: flex;
 }

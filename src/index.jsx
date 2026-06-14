@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App'; // This connects your Orb component
+import App from './App'; // This tells index.js to use App.jsx
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

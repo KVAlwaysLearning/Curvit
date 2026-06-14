@@ -5,7 +5,8 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-scripts": "5.0.1",
-    "three": "^0.150.0"
+    "three": "^0.150.0",
+    "ogl": "^0.0.32"
   },
   "scripts": {
     "start": "react-scripts start",

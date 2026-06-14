@@ -1,28 +1,23 @@
-body, html, #root { 
-  margin: 0; padding: 0; height: 100%; width: 100%; 
-  overflow: hidden; /* Prevents scrollbars from affecting size */
-}
+body, html, #root { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
 
-.app-wrapper { 
-  position: relative; 
-  width: 100vw; 
-  height: 100vh; 
-}
+.app-wrapper { position: relative; width: 100vw; height: 100vh; }
 
-
-/* Ensure the background orb layer is truly fixed to the window */
 .background-orb {
-  position: fixed;
+  position: absolute;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
   z-index: 0;
-  pointer-events: none; /* Let clicks pass through to UI */
 }
 
 .content-container {
   display: flex;
   position: relative;
   z-index: 1;
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
+  pointer-events: none; /* Let clicks pass through */
+}
+
+.left-section, .right-section { 
+  pointer-events: auto; /* Re-enable for content */
+  padding: 2rem; color: white; 
 }

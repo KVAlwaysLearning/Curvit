@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css'; // Standard Create React App CSS
-import Orb from './components/Orb'; // Import the Orb we just made
+import Orb from './Orb';
 
 function App() {
   return (

@@ -1,23 +1,34 @@
-body, html, #root { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; }
-
-.app-wrapper { position: relative; width: 100vw; height: 100vh; }
-
-.background-orb {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: 0;
+/* Ensure the root handles full screen */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
 }
 
-.content-container {
-  display: flex;
+/* This container holds the Orb and stays behind everything */
+.background-orb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Pushes it behind all content */
+  pointer-events: none; /* Allows mouse to pass through to the Orb if needed */
+}
+
+/* Ensure the orb container fills the background div */
+.orb-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* Your content wrapper */
+.content-wrapper {
   position: relative;
   z-index: 1;
-  width: 100%; height: 100%;
-  pointer-events: none; /* Let clicks pass through */
-}
-
-.left-section, .right-section { 
-  pointer-events: auto; /* Re-enable for content */
-  padding: 2rem; color: white; 
+  width: 100%;
+  min-height: 100vh;
+  pointer-events: auto; /* Re-enables interaction for content */
 }

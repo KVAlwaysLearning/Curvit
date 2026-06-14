@@ -192,7 +192,10 @@ export default function Orb({
     gl.clearColor(0, 0, 0, 0);
     container.appendChild(gl.canvas);
 
-    const geometry = new Triangle(gl);
+    const geometry = new Geometry(gl, {
+  position: { size: 2, data: new Float32Array([-1, -1, 3, -1, -1, 3]) },
+  uv: { size: 2, data: new Float32Array([0, 0, 2, 0, 0, 2]) },
+});
     const program = new Program(gl, {
       vertex: vert,
       fragment: frag,

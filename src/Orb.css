@@ -1,12 +1,2 @@
-.orb-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.orb-container canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain; /* Ensures the circular aspect ratio is preserved */
-}
+.orb-container { width: 100%; height: 100%; position: relative; }
+.orb-container canvas { display: block; width: 100% !important; height: 100% !important; }

@@ -9,15 +9,14 @@ body, html, #root {
   height: 100vh; 
 }
 
-/* Force the background to be fixed and cover the viewport */
+
+/* Ensure the background orb layer is truly fixed to the window */
 .background-orb {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   z-index: 0;
-  pointer-events: none; /* Allows clicks to pass through to your content */
+  pointer-events: none; /* Let clicks pass through to UI */
 }
 
 .content-container {

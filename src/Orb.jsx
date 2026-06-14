@@ -269,7 +269,7 @@ export default function Orb({
       program.uniforms.backgroundColor.value = hexToVec3(backgroundColor);
 
       const effectiveHover = forceHoverState ? 1 : targetHover;
-      program.uniforms.hover.value += (effectiveHover - program.uniforms.hover.value) * 0.1;
+      program.uniforms.hover.value = (forceHoverState ? 1 : targetHover);
 
       if (rotateOnHover && effectiveHover > 0.5) {
         currentRot += dt * rotationSpeed;

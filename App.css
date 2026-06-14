@@ -1,0 +1,54 @@
+/* Basic Reset */
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: sans-serif;
+  overflow: hidden; /* Recommended for full-screen apps */
+}
+
+/* Flex Container for the 40/60 Split */
+.main-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* --- Left Section (40%) --- */
+.left-section {
+  flex: 0 0 40%; /* 40% width, do not grow, do not shrink */
+  position: relative; /* Required for the Orb overlay */
+  background-color: #050509; /* Dark background so the Orb stands out */
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* This container holds the Orb animation */
+.orb-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Orb goes in the back */
+}
+
+/* This container holds your text, sitting above the animation */
+.content-overlay {
+  position: relative;
+  z-index: 2; /* Text goes in the front */
+  text-align: center;
+}
+
+/* --- Right Section (60%) --- */
+.right-section {
+  flex: 1; /* Fills the remaining space (60%) */
+  background-color: #f4f4f9;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

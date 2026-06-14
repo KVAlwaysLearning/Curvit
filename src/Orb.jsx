@@ -187,15 +187,22 @@ export default function Orb({
     const container = ctnDom.current;
     if (!container) return;
 
+    // 1. Initialize Renderer
     const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
+    
+    // Ensure the canvas fills the container
+    gl.canvas.style.display = 'block';
+    gl.canvas.style.width = '100%';
+    gl.canvas.style.height = '100%';
     container.appendChild(gl.canvas);
 
     const geometry = new Geometry(gl, {
-  position: { size: 2, data: new Float32Array([-1, -1, 3, -1, -1, 3]) },
-  uv: { size: 2, data: new Float32Array([0, 0, 2, 0, 0, 2]) },
-});
+      position: { size: 2, data: new Float32Array([-1, -1, 3, -1, -1, 3]) },
+      uv: { size: 2, data: new Float32Array([0, 0, 2, 0, 0, 2]) },
+    });
+
     const program = new Program(gl, {
       vertex: vert,
       fragment: frag,
@@ -214,46 +221,45 @@ export default function Orb({
 
     const mesh = new Mesh(gl, { geometry, program });
 
+    // 2. Define Resize Logic
     function resize() {
       if (!container) return;
       const dpr = window.devicePixelRatio || 1;
       const width = container.clientWidth;
       const height = container.clientHeight;
+      
       renderer.setSize(width * dpr, height * dpr);
-      gl.canvas.style.width = width + 'px';
-      gl.canvas.style.height = height + 'px';
-      program.uniforms.iResolution.value.set(gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height);
+      
+      // Update Uniforms
+      program.uniforms.iResolution.value.set(
+        gl.canvas.width, 
+        gl.canvas.height, 
+        gl.canvas.width / gl.canvas.height
+      );
     }
-    window.addEventListener('resize', resize);
-    resize();
 
+    window.addEventListener('resize', resize);
+    resize(); // Initial call
+    
+    // 3. Animation Loop
     let targetHover = 0;
     let lastTime = 0;
     let currentRot = 0;
     const rotationSpeed = 0.3;
 
+    // Mouse Interaction Logic
     const handleMouseMove = e => {
       const rect = container.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const width = rect.width;
-      const height = rect.height;
-      const size = Math.min(width, height);
-      const centerX = width / 2;
-      const centerY = height / 2;
-      const uvX = ((x - centerX) / size) * 2.0;
-      const uvY = ((y - centerY) / size) * 2.0;
+      const size = Math.min(rect.width, rect.height);
+      const uvX = ((x - rect.width / 2) / size) * 2.0;
+      const uvY = ((y - rect.height / 2) / size) * 2.0;
 
-      if (Math.sqrt(uvX * uvX + uvY * uvY) < 0.8) {
-        targetHover = 1;
-      } else {
-        targetHover = 0;
-      }
+      targetHover = (Math.sqrt(uvX * uvX + uvY * uvY) < 0.8) ? 1 : 0;
     };
 
-    const handleMouseLeave = () => {
-      targetHover = 0;
-    };
+    const handleMouseLeave = () => { targetHover = 0; };
 
     container.addEventListener('mousemove', handleMouseMove);
     container.addEventListener('mouseleave', handleMouseLeave);
@@ -263,6 +269,7 @@ export default function Orb({
       rafId = requestAnimationFrame(update);
       const dt = (t - lastTime) * 0.001;
       lastTime = t;
+      
       program.uniforms.iTime.value = t * 0.001;
       program.uniforms.hue.value = hue;
       program.uniforms.hoverIntensity.value = hoverIntensity;
@@ -285,7 +292,9 @@ export default function Orb({
       window.removeEventListener('resize', resize);
       container.removeEventListener('mousemove', handleMouseMove);
       container.removeEventListener('mouseleave', handleMouseLeave);
-      container.removeChild(gl.canvas);
+      if (container.contains(gl.canvas)) {
+        container.removeChild(gl.canvas);
+      }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, [hue, hoverIntensity, rotateOnHover, forceHoverState, backgroundColor]);
